@@ -2,7 +2,6 @@ import django.utils.timezone
 import folium
 
 from django.utils.timezone import localtime
-from django.shortcuts import render
 from pokemon_entities.models import Pokemon, PokemonEntity
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
@@ -44,7 +43,7 @@ def show_all_pokemons(request):
         pokemons_on_page.append({
             'pokemon_id': pokemon.id,
             'img_url': request.build_absolute_uri(pokemon.image.url),
-            'title_ru': pokemon.title
+            'title_ru': pokemon.title,
         })
 
     return render(request, 'mainpage.html', context={
@@ -58,6 +57,8 @@ def show_pokemon(request, pokemon_id):
     pokemon_on_page = {
         'img_url': request.build_absolute_uri(pokemon.image.url),
         'title_ru': pokemon.title,
+        'title_en': pokemon.title_en,
+        'title_jp': pokemon.title_jp,
         'description': pokemon.description
     }
     time_now = localtime()
