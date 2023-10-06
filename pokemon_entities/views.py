@@ -57,7 +57,8 @@ def show_pokemon(request, pokemon_id):
     pokemon = get_object_or_404(Pokemon, pk=pokemon_id)
     pokemon_on_page = {
         'img_url': request.build_absolute_uri(pokemon.image.url),
-        'title_ru': pokemon.title
+        'title_ru': pokemon.title,
+        'description': pokemon.description
     }
     time_now = localtime()
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
