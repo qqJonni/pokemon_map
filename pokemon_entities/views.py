@@ -1,3 +1,4 @@
+import django.utils.timezone
 import folium
 import json
 
@@ -12,7 +13,7 @@ DEFAULT_IMAGE_URL = (
     '/latest/fixed-aspect-ratio-down/width/240/height/240?cb=20130525215832'
     '&fill=transparent'
 )
-
+TIME_NOW = django.utils.timezone.localtime()
 
 def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
     icon = folium.features.CustomIcon(
@@ -28,10 +29,8 @@ def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
 
 
 def show_all_pokemons(request):
-    # with open('pokemon_entities/pokemons.json', encoding='utf-8') as database:
-    #     pokemons = json.load(database)['pokemons']
     pokemons = Pokemon.objects.all()
-    pokemons_entity = PokemonEntity.objects.all()
+    pokemons_entity = PokemonEntity.objects.all().filter(appeared_at__lt=TIME_NOW).filter(disappeared_at__gt=TIME_NOW)
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     for pokemon in pokemons_entity:
         add_pokemon(
