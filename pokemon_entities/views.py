@@ -1,9 +1,8 @@
-import django.utils.timezone
 import folium
 
 from django.utils.timezone import localtime
 from pokemon_entities.models import Pokemon, PokemonEntity
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 
 
 MOSCOW_CENTER = [55.751244, 37.618423]
